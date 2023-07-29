@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 import br.ufpb.dcx.lab1v1.entity.Discipline;
+import br.ufpb.dcx.lab1v1.exception.DisciplineAlreadyExistsException;
+import br.ufpb.dcx.lab1v1.exception.DisciplineNameAlreadyExists;
+import br.ufpb.dcx.lab1v1.exception.DisciplineNotFoundException;
 import org.springframework.stereotype.Repository;
 
 
@@ -19,7 +22,7 @@ public class DisciplineRepository {
         this.disciplines =  new HashMap<>();
     }
 
-    public Discipline addDiscipline(String nameDiscipline) {
+    public Discipline addDiscipline(String nameDiscipline) throws DisciplineAlreadyExistsException {
         Discipline newDiscipline = new Discipline();
 
         newDiscipline.setNameDiscipline(nameDiscipline);
@@ -38,21 +41,23 @@ public class DisciplineRepository {
         return listDisciplines;
     }
 
-    public Discipline changeNameDiscipline(Integer id, String novo_nome) {
+    public Discipline changeNameDiscipline(Integer id, String novo_nome) throws DisciplineNotFoundException, DisciplineNameAlreadyExists {
         Discipline discipline = this.returnDiscipline(id);
+        this.verifyDisciplineChangeName(id, novo_nome);
         discipline.setNameDiscipline(novo_nome);
 
         return discipline;
     }
 
-    public Discipline addGradeInDiscipline(Integer id, Float grade){
+
+    public Discipline addGradeInDiscipline(Integer id, Float grade) throws DisciplineNotFoundException {
         Discipline discipline = this.returnDiscipline(id);
         discipline.addGrades(grade);
 
         return discipline;
     }
 
-    public Discipline addLikeDiscipline(Integer id) {
+    public Discipline addLikeDiscipline(Integer id) throws DisciplineNotFoundException {
         Discipline discipline = this.returnDiscipline(id);
         discipline.addLike();
 
@@ -60,17 +65,17 @@ public class DisciplineRepository {
     }
 
 
-    public Discipline returnDiscipline(Integer id) {
+    public Discipline returnDiscipline(Integer id) throws DisciplineNotFoundException{
         Discipline discipline = disciplines.get(id);
 
         if (discipline != null) {
             return discipline;
         }
 
-        throw new RuntimeException("Disciplina não encontrada");
+        throw new DisciplineNotFoundException();
     }
 
-    public Discipline removeDiscipline(Integer id_disciplina) {
+    public Discipline removeDiscipline(Integer id_disciplina) throws  DisciplineNotFoundException{
         Discipline discipline = this.returnDiscipline(id_disciplina);
 
         this.disciplines.remove(id_disciplina, discipline);
@@ -93,10 +98,20 @@ public class DisciplineRepository {
         return sortedDisciplines;
     }
 
-    private void verifyDiscipline(Discipline discipline) {
+    private void verifyDiscipline(Discipline discipline) throws DisciplineAlreadyExistsException {
         for (Discipline disciplineCreated : this.disciplines.values()) {
             if (disciplineCreated.getNameDiscipline().equals(discipline.getNameDiscipline())) {
-                throw new RuntimeException("Disciplina já cadastrada");
+                throw new DisciplineAlreadyExistsException();
+            }
+        }
+    }
+
+    public void verifyDisciplineChangeName(Integer id, String novo_nome) throws DisciplineNameAlreadyExists {
+        for (Discipline disciplineCreated : this.disciplines.values()) {
+            if (disciplineCreated.getNameDiscipline().equals(novo_nome)) {
+                if (!disciplineCreated.getId().equals(id)) {
+                    throw new DisciplineNameAlreadyExists();
+                }
             }
         }
     }

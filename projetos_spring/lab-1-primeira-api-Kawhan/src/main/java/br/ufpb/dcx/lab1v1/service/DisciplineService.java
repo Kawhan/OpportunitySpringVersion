@@ -4,6 +4,9 @@ import br.ufpb.dcx.lab1v1.dto.DisciplineResponseDTO;
 import br.ufpb.dcx.lab1v1.dto.DisciplineNameRequestDTO;
 import br.ufpb.dcx.lab1v1.dto.DisciplineGradeRequestDTO;
 import br.ufpb.dcx.lab1v1.entity.Discipline;
+import br.ufpb.dcx.lab1v1.exception.DisciplineAlreadyExistsException;
+import br.ufpb.dcx.lab1v1.exception.DisciplineNameAlreadyExists;
+import br.ufpb.dcx.lab1v1.exception.DisciplineNotFoundException;
 import br.ufpb.dcx.lab1v1.repository.DisciplineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,26 +19,26 @@ public class DisciplineService {
     @Autowired
     DisciplineRepository disciplineRepository;
 
-    public DisciplineResponseDTO addDiscipline(DisciplineNameRequestDTO disciplineNameRequestDTO) {
+    public DisciplineResponseDTO addDiscipline(DisciplineNameRequestDTO disciplineNameRequestDTO) throws DisciplineAlreadyExistsException {
         return DisciplineResponseDTO.from(disciplineRepository.addDiscipline(disciplineNameRequestDTO.getNameDiscipline()));
     }
     public List<DisciplineResponseDTO> listAllDisciplines() {
         return DisciplineResponseDTO.fromAll(disciplineRepository.listAllDisciplines());
     }
-    public DisciplineResponseDTO changeNameDiscipline(Integer id, DisciplineNameRequestDTO disciplineNameRequestDTO) {
+    public DisciplineResponseDTO changeNameDiscipline(Integer id, DisciplineNameRequestDTO disciplineNameRequestDTO) throws DisciplineNotFoundException, DisciplineNameAlreadyExists {
         return DisciplineResponseDTO.from(disciplineRepository.changeNameDiscipline(id, disciplineNameRequestDTO.getNameDiscipline()));
     }
-    public DisciplineResponseDTO returnDiscipline(Integer id) {
+    public DisciplineResponseDTO returnDiscipline(Integer id) throws DisciplineNotFoundException {
         return DisciplineResponseDTO.from(disciplineRepository.returnDiscipline(id));
     }
-    public DisciplineResponseDTO addGradeDiscipline(Integer id, DisciplineGradeRequestDTO disciplineGradeDTO) {
+    public DisciplineResponseDTO addGradeDiscipline(Integer id, DisciplineGradeRequestDTO disciplineGradeDTO) throws DisciplineNotFoundException {
         return DisciplineResponseDTO.from(disciplineRepository.addGradeInDiscipline(id, disciplineGradeDTO.getGrade()));
     }
 
-    public DisciplineResponseDTO addLikeDiscipline(Integer id) {
+    public DisciplineResponseDTO addLikeDiscipline(Integer id) throws DisciplineNotFoundException {
         return DisciplineResponseDTO.from(disciplineRepository.addLikeDiscipline(id));
     }
-    public DisciplineResponseDTO removeDiscipline(Integer id) {
+    public DisciplineResponseDTO removeDiscipline(Integer id) throws DisciplineNotFoundException {
         return DisciplineResponseDTO.from(disciplineRepository.removeDiscipline(id));
     };
     public List<DisciplineResponseDTO> getDisciplineForHighestAvg() {
