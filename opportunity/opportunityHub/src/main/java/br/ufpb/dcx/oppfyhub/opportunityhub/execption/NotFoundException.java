@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Builder
 @Getter
 @Setter
-@ResponseStatus(code= HttpStatus.CONFLICT)
-public class AlreadyExistsException extends RuntimeException{
+@ResponseStatus(code= HttpStatus.NOT_FOUND)
+public class NotFoundException extends RuntimeException{
     private String title;
     private String details;
 
-    public AlreadyExistsException(String details, String title) {
+    public NotFoundException(String details, String title) {
         this.title = title;
         this.details = details;
     }
