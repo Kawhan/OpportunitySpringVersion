@@ -14,51 +14,51 @@ import java.time.LocalDate;
 @Setter
 public class JobRequestDTO {
     @JsonProperty("number_vacancies")
-    @NotNull
+    @NotNull(message = "Number vacancies of project not be a null")
     private Integer numberVacancies;
 
     @JsonProperty("hours_week")
-    @NotNull
+    @NotNull(message = "Hours week of project not be a null")
     private Integer hoursWeek;
 
     @JsonProperty("scholarship_value")
-    @NotNull
+    @NotNull(message = "Scholarship value of project not be a null")
     private Double scholarshipValue;
 
     @JsonProperty("opening_date")
-    @NotNull
+    @NotNull(message = "Opening date of project not be a null")
     private LocalDate openingDate;
 
     @JsonProperty("benefits")
-    @NotNull
+    @NotNull(message = "Benefits of project not be a null")
     private String benefits;
 
     @JsonProperty("title_job")
-    @NotNull
+    @NotNull(message = "Title of Job project not be a null")
     private String titleJob;
 
     @JsonProperty("pdf_link")
-    @NotNull
+    @NotNull(message = "PDF link not be a null")
     private String pdfLink;
 
     @JsonProperty("closing_date")
-    @NotNull
+    @NotNull(message = "Closing date of project not be a null")
     private LocalDate closingDate;
 
     @JsonProperty("teacher")
-    @NotNull
+    @NotNull(message = "Teacher id not be a null")
     private Long teacherID;
 
     @JsonProperty("type_job")
-    @NotNull
+    @NotNull(message = "Type of job not be a null")
     @Enumerated(EnumType.STRING)
     private TypeJob typeJob;
 
     @JsonProperty("name_project")
-    @NotNull
+    @NotNull(message = "Name of project not be a null")
     private String nameProject;
 
     @JsonProperty("link_job")
-    @NotNull
+    @NotNull(message = "Link of job not be a null")
     private String linkJob;
 }

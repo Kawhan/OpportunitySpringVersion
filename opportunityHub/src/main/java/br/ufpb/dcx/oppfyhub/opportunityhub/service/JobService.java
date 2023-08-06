@@ -6,8 +6,10 @@ import br.ufpb.dcx.oppfyhub.opportunityhub.entity.Job;
 import br.ufpb.dcx.oppfyhub.opportunityhub.entity.Teacher;
 import br.ufpb.dcx.oppfyhub.opportunityhub.execption.JobNotFoundException;
 import br.ufpb.dcx.oppfyhub.opportunityhub.execption.NotFoundTeacherException;
+import br.ufpb.dcx.oppfyhub.opportunityhub.mappers.JobMapper;
 import br.ufpb.dcx.oppfyhub.opportunityhub.repository.JobRepository;
 import br.ufpb.dcx.oppfyhub.opportunityhub.repository.TeacherRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,9 @@ public class JobService {
 
     @Autowired
     TeacherRepository teacherRepository;
+
+    @Autowired
+    JobMapper jobMapper;
 
     public List<JobResponseDTO> getAllJobs() {
         return JobResponseDTO.fromAll(jobRepository.findAll());
@@ -68,20 +73,9 @@ public class JobService {
         if (teacher.isEmpty()) {
             throw new NotFoundTeacherException();
         }
-
-        job.get().setNumberVacancies(jobRequestDTO.getNumberVacancies());
-        job.get().setHoursWeek(jobRequestDTO.getHoursWeek());
-        job.get().setScholarshipValue(jobRequestDTO.getScholarshipValue());
-        job.get().setOpeningDate(jobRequestDTO.getOpeningDate());
-        job.get().setBenefits(jobRequestDTO.getBenefits());
-        job.get().setTypeJob(jobRequestDTO.getTypeJob());
-        job.get().setPdfLink(jobRequestDTO.getPdfLink());
-        job.get().setClosingDate(jobRequestDTO.getClosingDate());
-        job.get().setTeacher(teacher.get());
-        job.get().setTypeJob(jobRequestDTO.getTypeJob());
-        job.get().setNameProject(jobRequestDTO.getNameProject());
-        job.get().setLinkJob(jobRequestDTO.getLinkJob());
-        jobRepository.save(job.get());
+        Job updateJob = jobMapper.updateJobFromDto(jobRequestDTO, job.get());
+        updateJob.setTeacher(teacher.get());
+        jobRepository.save(updateJob);
         return JobResponseDTO.from(job.get());
     }
 }
