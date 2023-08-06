@@ -9,7 +9,6 @@ import br.ufpb.dcx.oppfyhub.opportunityhub.execption.NotFoundTeacherException;
 import br.ufpb.dcx.oppfyhub.opportunityhub.mappers.JobMapper;
 import br.ufpb.dcx.oppfyhub.opportunityhub.repository.JobRepository;
 import br.ufpb.dcx.oppfyhub.opportunityhub.repository.TeacherRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
