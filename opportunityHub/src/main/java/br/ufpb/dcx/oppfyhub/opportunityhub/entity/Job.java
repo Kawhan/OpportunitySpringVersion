@@ -30,6 +30,7 @@ public class Job {
     Double scholarshipValue;
     @CreationTimestamp
     LocalDate registrationData;
+    LocalDate openingDate;
     String benefits;
     String titleJob;
     String pdfLink;
@@ -44,6 +45,7 @@ public class Job {
     public Job(Integer numberVacancies,
                Integer hoursWeek,
                Double scholarshipValue,
+               LocalDate openingDate,
                String benefits,
                String titleJob,
                String pdfLink,
@@ -55,6 +57,7 @@ public class Job {
         this.numberVacancies = numberVacancies;
         this.hoursWeek = hoursWeek;
         this.scholarshipValue = scholarshipValue;
+        this.openingDate = openingDate;
         this.benefits = benefits;
         this.titleJob = titleJob;
         this.pdfLink = pdfLink;

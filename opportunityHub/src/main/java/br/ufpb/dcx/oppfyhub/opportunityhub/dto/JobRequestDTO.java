@@ -6,14 +6,12 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class JobRequestDTO {
     @JsonProperty("number_vacancies")
     @NotNull
@@ -26,6 +24,10 @@ public class JobRequestDTO {
     @JsonProperty("scholarship_value")
     @NotNull
     private Double scholarshipValue;
+
+    @JsonProperty("opening_date")
+    @NotNull
+    private LocalDate openingDate;
 
     @JsonProperty("benefits")
     @NotNull

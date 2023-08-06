@@ -16,11 +16,11 @@ public class TeacherService {
     @Autowired
     TeacherRepository teacherRepository;
 
-    public List<TeacherResponseDTO> ListAllTeachers () {
+    public List<TeacherResponseDTO> listAllTeachers() {
         return TeacherResponseDTO.fromAll(teacherRepository.findAll());
     }
 
-    public TeacherResponseDTO AddTeacher(TeacherNameRequestDTO teacherNameRequestDTO) {
+    public TeacherResponseDTO addTeacher(TeacherNameRequestDTO teacherNameRequestDTO) {
         Teacher newTeacher = new Teacher(teacherNameRequestDTO.getTeacherName());
         Teacher teacher = teacherRepository.save(newTeacher);
         return TeacherResponseDTO.from(teacher);

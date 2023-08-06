@@ -39,4 +39,10 @@ public class JobController {
     public JobResponseDTO getJob(@PathVariable long id) {
         return jobService.getJob(id);
     }
+
+    @PostMapping("{id}/change")
+    @ResponseStatus(code=HttpStatus.OK)
+    public  JobResponseDTO changeInfoJob(@PathVariable long id, @RequestBody JobRequestDTO jobRequestDTO) {
+        return jobService.changeInfoJob(id, jobRequestDTO);
+    }
 }

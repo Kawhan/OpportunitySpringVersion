@@ -6,28 +6,24 @@ import br.ufpb.dcx.oppfyhub.opportunityhub.enums.TypeJob;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Setter
 @Getter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class JobResponseDTO {
     private Integer numberVacancies;
     private Integer hoursWeek;
     private Double scholarshipValue;
     @CreationTimestamp
     private LocalDate registrationData;
+    private LocalDate openingDate;
     private String benefits;
     private String titleJob;
     private String pdfLink;
@@ -45,6 +41,7 @@ public class JobResponseDTO {
                 .numberVacancies(job.getNumberVacancies())
                 .hoursWeek(job.getHoursWeek())
                 .scholarshipValue(job.getScholarshipValue())
+                .openingDate(job.getOpeningDate())
                 .registrationData(job.getRegistrationData())
                 .benefits(job.getBenefits())
                 .titleJob(job.getTitleJob())
@@ -58,6 +55,6 @@ public class JobResponseDTO {
     }
 
     public static List<JobResponseDTO> fromAll(List<Job> jobs) {
-        return jobs.stream().map(JobResponseDTO::from).collect(Collectors.toList());
+        return jobs.stream().map(JobResponseDTO::from).toList();
     }
 }
