@@ -1,17 +1,13 @@
 package br.ufpb.dcx.oppfyhub.opportunityhub.dto;
 
-import br.ufpb.dcx.oppfyhub.opportunityhub.entity.Teacher;
 import br.ufpb.dcx.oppfyhub.opportunityhub.enums.TypeJob;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 

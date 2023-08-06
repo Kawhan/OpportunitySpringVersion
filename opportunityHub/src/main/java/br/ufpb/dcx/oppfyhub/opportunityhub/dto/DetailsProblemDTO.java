@@ -1,6 +1,11 @@
 package br.ufpb.dcx.lab1v1.dto;
 
-import lombok.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Builder
 @Setter
