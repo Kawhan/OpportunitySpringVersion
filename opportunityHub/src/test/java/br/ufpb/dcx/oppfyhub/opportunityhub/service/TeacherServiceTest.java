@@ -20,6 +20,7 @@ import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -123,5 +124,70 @@ public class TeacherServiceTest {
 
         // Verifica se o método findById do repositório mock foi chamado uma vez com o ID correto
         verify(teacherRepository, times(1)).findById(teacherId);
+    }
+
+    @Test
+    void testChangeNameTeacherFound() {
+        long teacherId = 1L;
+        String newName = "New Teacher Name";
+
+        // Mocking
+        TeacherNameRequestDTO requestDTO = new TeacherNameRequestDTO();
+        requestDTO.setTeacherName(newName);
+
+        Teacher existingTeacher = new Teacher("Old Teacher Name");
+        when(teacherRepository.findById(teacherId)).thenReturn(Optional.of(existingTeacher));
+
+        Teacher savedTeacher = new Teacher(newName);
+        when(teacherRepository.save(any(Teacher.class))).thenReturn(savedTeacher);
+
+        // Calling the service method
+        TeacherResponseDTO responseDTO = teacherServiceTest.changeNameTeacher(teacherId, requestDTO);
+
+        // Assertions
+        assertNotNull(responseDTO);
+        assertEquals(newName, responseDTO.getTeacherName());
+    }
+
+    @Test
+    void testChangeNameTeacherNotFound() {
+        long teacherId = 1L;
+
+        // Mocking
+        when(teacherRepository.findById(teacherId)).thenReturn(Optional.empty());
+
+        // Calling the service method and expecting an exception
+        assertThrows(NotFoundTeacherException.class, () -> teacherServiceTest.changeNameTeacher(teacherId, new TeacherNameRequestDTO()));
+    }
+
+    @Test
+    void testDeleteTeacher() {
+        long teacherId = 1L;
+
+        // Mocking
+        Teacher teacherToDelete = new Teacher("Teacher to Delete");
+        when(teacherRepository.findById(teacherId)).thenReturn(Optional.of(teacherToDelete));
+
+        // Calling the service method
+        teacherServiceTest.deleteTeacher(teacherId);
+
+        // Verifying interactions
+        verify(teacherRepository, times(1)).findById(teacherId); // Verify findById was called once
+        verify(teacherRepository, times(1)).delete(teacherToDelete); // Verify delete was called once
+    }
+
+    @Test
+    void testDeleteTeacherNotFound() {
+        long teacherId = 1L;
+
+        // Mocking
+        when(teacherRepository.findById(teacherId)).thenReturn(Optional.empty());
+
+        // Calling the service method and expecting an exception
+        assertThrows(NotFoundTeacherException.class, () -> teacherServiceTest.deleteTeacher(teacherId));
+
+        // Verifying interactions
+        verify(teacherRepository, times(1)).findById(teacherId); // Verify findById was called once
+        verify(teacherRepository, never()).delete(any(Teacher.class)); // Verify delete was never called
     }
 }
