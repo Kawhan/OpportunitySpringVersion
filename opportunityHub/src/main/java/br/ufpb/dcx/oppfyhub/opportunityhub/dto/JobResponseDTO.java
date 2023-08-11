@@ -5,6 +5,9 @@ import br.ufpb.dcx.oppfyhub.opportunityhub.entity.Teacher;
 import br.ufpb.dcx.oppfyhub.opportunityhub.enums.TypeJob;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,6 +21,10 @@ import java.util.List;
 @Getter
 @Builder
 public class JobResponseDTO {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
     private Integer numberVacancies;
     private Integer hoursWeek;
     private Double scholarshipValue;
@@ -38,6 +45,7 @@ public class JobResponseDTO {
     public static JobResponseDTO from(Job job) {
         return JobResponseDTO
                 .builder()
+                .id(job.getId())
                 .numberVacancies(job.getNumberVacancies())
                 .hoursWeek(job.getHoursWeek())
                 .scholarshipValue(job.getScholarshipValue())
