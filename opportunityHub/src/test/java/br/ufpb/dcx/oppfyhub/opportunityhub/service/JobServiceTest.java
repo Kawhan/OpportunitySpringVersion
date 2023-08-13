@@ -2,10 +2,10 @@ package br.ufpb.dcx.oppfyhub.opportunityhub.service;
 
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.JobRequestDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.JobResponseDTO;
-import br.ufpb.dcx.oppfyhub.opportunityhub.dto.TeacherResponseDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.entity.Job;
 import br.ufpb.dcx.oppfyhub.opportunityhub.entity.Teacher;
 import br.ufpb.dcx.oppfyhub.opportunityhub.enums.TypeJob;
+import br.ufpb.dcx.oppfyhub.opportunityhub.execption.JobNotFoundException;
 import br.ufpb.dcx.oppfyhub.opportunityhub.execption.NotFoundTeacherException;
 import br.ufpb.dcx.oppfyhub.opportunityhub.repository.JobRepository;
 import br.ufpb.dcx.oppfyhub.opportunityhub.repository.TeacherRepository;
@@ -134,6 +134,37 @@ public class JobServiceTest {
 
         // Verify interactions
         verify(teacherRepository, times(1)).findById(1L);
+        verify(jobRepository, never()).save(any(Job.class));
+    }
+
+    @Test
+    public void getJobTest() {
+        long jobId = 1L;
+
+        Job job = new Job();
+        job.setId(jobId);
+        job.setTitleJob("Vaga do ayty");
+
+        when(jobRepository.findById(job.getId())).thenReturn(Optional.of(job));
+
+        JobResponseDTO jobResponseDTO = jobService.getJob(job.getId());
+
+        assertNotNull(jobResponseDTO);
+        assertEquals(jobId, jobResponseDTO.getId());
+        assertEquals("Vaga do ayty", jobResponseDTO.getTitleJob());
+
+        verify(jobRepository, times(1)).findById(jobId);
+    }
+
+    @Test
+    public void getJobTestNotFound() {
+        long jobId = 2L;
+
+        when(jobRepository.findById(jobId)).thenReturn(Optional.empty());
+
+        assertThrows(JobNotFoundException.class, () -> jobService.getJob(jobId));
+
+        verify(jobRepository, times(1)).findById(jobId);
         verify(jobRepository, never()).save(any(Job.class));
     }
 }
