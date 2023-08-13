@@ -5,8 +5,9 @@ import br.ufpb.dcx.oppfyhub.opportunityhub.dto.JobResponseDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.entity.Job;
 import br.ufpb.dcx.oppfyhub.opportunityhub.entity.Teacher;
 import br.ufpb.dcx.oppfyhub.opportunityhub.enums.TypeJob;
-import br.ufpb.dcx.oppfyhub.opportunityhub.execption.JobNotFoundException;
+import br.ufpb.dcx.oppfyhub.opportunityhub.execption.NotFoundJobException;
 import br.ufpb.dcx.oppfyhub.opportunityhub.execption.NotFoundTeacherException;
+import br.ufpb.dcx.oppfyhub.opportunityhub.mappers.JobMapper;
 import br.ufpb.dcx.oppfyhub.opportunityhub.repository.JobRepository;
 import br.ufpb.dcx.oppfyhub.opportunityhub.repository.TeacherRepository;
 import org.junit.jupiter.api.Test;
@@ -40,6 +41,9 @@ public class JobServiceTest {
 
     @Mock
     private TeacherRepository teacherRepository;
+
+    @Mock
+    private JobMapper jobMapper;
 
     @Test
     public void getAllJobsTest() {
@@ -162,9 +166,69 @@ public class JobServiceTest {
 
         when(jobRepository.findById(jobId)).thenReturn(Optional.empty());
 
-        assertThrows(JobNotFoundException.class, () -> jobService.getJob(jobId));
+        assertThrows(NotFoundJobException.class, () -> jobService.getJob(jobId));
 
         verify(jobRepository, times(1)).findById(jobId);
         verify(jobRepository, never()).save(any(Job.class));
+    }
+
+    @Test
+    public void testChangeInfoJob() {
+        long jobId = 1L;
+        long teacherId = 1L;
+        JobRequestDTO jobRequestDTO = new JobRequestDTO();
+        jobRequestDTO.setTeacherID(teacherId);
+
+        Job existingJob = new Job();
+        existingJob.setId(jobId);
+
+        Teacher teacher = new Teacher();
+        teacher.setId(teacherId);
+
+        Job updatedJob = new Job();
+        updatedJob.setId(jobId);
+        updatedJob.setTeacher(teacher);
+
+        when(jobRepository.findById(jobId)).thenReturn(Optional.of(existingJob));
+        when(teacherRepository.findById(teacherId)).thenReturn(Optional.of(teacher));
+        when(jobMapper.updateJobFromDto(jobRequestDTO, existingJob)).thenReturn(updatedJob);
+
+        JobResponseDTO result = jobService.changeInfoJob(jobId, jobRequestDTO);
+
+        verify(jobRepository, times(1)).findById(jobId);
+        verify(teacherRepository, times(1)).findById(teacherId);
+        verify(jobRepository, times(1)).save(updatedJob);
+
+        assertNotNull(result);
+        assertEquals(jobId, result.getId());
+    }
+
+    @Test
+    public void testChangeInfoJobNotFound() {
+        long jobId = 1L;
+        JobRequestDTO jobRequestDTO = new JobRequestDTO();
+
+        when(jobRepository.findById(jobId)).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundJobException.class, () -> jobService.changeInfoJob(jobId, jobRequestDTO));
+
+        verify(jobRepository, times(1)).findById(jobId);
+    }
+
+    @Test
+    public void testChangeInfoJobTeacherNotFound() {
+        long jobId = 1L;
+        long teacherId = 1L;
+        JobRequestDTO jobRequestDTO = new JobRequestDTO();
+        jobRequestDTO.setTeacherID(1L);
+
+        Job existingJob = new Job();
+        when(jobRepository.findById(jobId)).thenReturn(Optional.of(existingJob));
+        when(teacherRepository.findById(teacherId)).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundTeacherException.class, () -> jobService.changeInfoJob(jobId, jobRequestDTO));
+
+        verify(jobRepository, times(1)).findById(jobId);
+        verify(teacherRepository, times(1)).findById(teacherId);
     }
 }

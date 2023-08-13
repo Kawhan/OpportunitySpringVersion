@@ -4,7 +4,7 @@ import br.ufpb.dcx.oppfyhub.opportunityhub.dto.JobRequestDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.JobResponseDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.entity.Job;
 import br.ufpb.dcx.oppfyhub.opportunityhub.entity.Teacher;
-import br.ufpb.dcx.oppfyhub.opportunityhub.execption.JobNotFoundException;
+import br.ufpb.dcx.oppfyhub.opportunityhub.execption.NotFoundJobException;
 import br.ufpb.dcx.oppfyhub.opportunityhub.execption.NotFoundTeacherException;
 import br.ufpb.dcx.oppfyhub.opportunityhub.mappers.JobMapper;
 import br.ufpb.dcx.oppfyhub.opportunityhub.repository.JobRepository;
@@ -56,7 +56,7 @@ public class JobService {
     public JobResponseDTO getJob(long id) {
         Optional<Job> job = jobRepository.findById(id);
         if (job.isEmpty()) {
-            throw new JobNotFoundException();
+            throw new NotFoundJobException();
         }
         return JobResponseDTO.from(job.get());
     }
@@ -65,7 +65,7 @@ public class JobService {
         Optional<Job> job = jobRepository.findById(id);
 
         if (job.isEmpty()) {
-            throw new JobNotFoundException();
+            throw new NotFoundJobException();
         }
 
         Optional<Teacher> teacher = teacherRepository.findById(jobRequestDTO.getTeacherID());
