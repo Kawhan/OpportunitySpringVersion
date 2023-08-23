@@ -1,5 +1,6 @@
 package br.ufpb.dcx.oppfyhub.opportunityhub.service;
 
+import br.ufpb.dcx.oppfyhub.opportunityhub.dto.JobTitleRequestDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.JobRequestDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.JobResponseDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.entity.Job;
@@ -63,11 +64,9 @@ public class JobService {
 
     public JobResponseDTO changeInfoJob(long id, JobRequestDTO jobRequestDTO) {
         Optional<Job> job = jobRepository.findById(id);
-
         if (job.isEmpty()) {
             throw new NotFoundJobException();
         }
-
         Optional<Teacher> teacher = teacherRepository.findById(jobRequestDTO.getTeacherID());
         if (teacher.isEmpty()) {
             throw new NotFoundTeacherException();
@@ -75,6 +74,25 @@ public class JobService {
         Job updateJob = jobMapper.updateJobFromDto(jobRequestDTO, job.get());
         updateJob.setTeacher(teacher.get());
         jobRepository.save(updateJob);
+        return JobResponseDTO.from(job.get());
+    }
+
+    public JobResponseDTO changeTitleJob(long id, JobTitleRequestDTO jobTitleRequestDTO) {
+        Optional<Job> job = jobRepository.findById(id);
+        if (job.isEmpty()) {
+            throw new NotFoundJobException();
+        }
+        job.get().setTitleJob(jobTitleRequestDTO.getTitleJob());
+        jobRepository.save(job.get());
+        return JobResponseDTO.from(job.get());
+    }
+
+    public JobResponseDTO deleteJob(long id) {
+        Optional<Job> job = jobRepository.findById(id);
+        if (job.isEmpty()) {
+            throw new NotFoundJobException();
+        }
+        jobRepository.delete(job.get());
         return JobResponseDTO.from(job.get());
     }
 }
