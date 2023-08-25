@@ -6,5 +6,6 @@ import lombok.Getter;
 public enum TypeJob {
     PROJETO_DE_PESQUISA,
     PROJETO_DE_EXTENSAO,
-    ESTAGIO
+    ESTAGIO,
+    PROJETO_DE_DESENVOLVIMENTO
 }
