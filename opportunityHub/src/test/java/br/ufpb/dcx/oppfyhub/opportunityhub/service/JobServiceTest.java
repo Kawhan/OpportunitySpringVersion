@@ -17,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +26,7 @@ import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -230,5 +232,73 @@ public class JobServiceTest {
 
         verify(jobRepository, times(1)).findById(jobId);
         verify(teacherRepository, times(1)).findById(teacherId);
+    }
+
+    @Test
+    public void testDeleteJobSuccess() {
+        // Mocking the job to be deleted
+        Job jobToDelete = new Job();
+        jobToDelete.setId(1L);
+
+        // Mocking the behavior of jobRepository.findById
+        when(jobRepository.findById(1L)).thenReturn(Optional.of(jobToDelete));
+
+        // Mocking the behavior of jobRepository.delete
+        doNothing().when(jobRepository).delete(jobToDelete);
+
+        // Call the method under test
+        JobResponseDTO result = jobService.deleteJob(1L);
+
+        // Assertions
+        assertNotNull(result);
+        assertEquals(1L, result.getId());
+
+        // Verify interactions
+        verify(jobRepository, times(1)).findById(1L);
+        verify(jobRepository, times(1)).delete(jobToDelete);
+    }
+
+    @Test
+    public void testDeleteJobNotFound() {
+        long jobId = 1L;
+
+        when(jobRepository.findById(jobId)).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundJobException.class, () -> jobService.deleteJob(jobId));
+
+        verify(jobRepository, times(1)).findById(jobId);
+        verify(jobRepository, never()).delete(any(Job.class));
+    }
+
+    @Test
+    public void testGetJobByTitleJob() {
+        String titleJobPrefix = "Job";
+
+        Job newJob = new Job();
+        newJob.setId(1L);
+        newJob.setTitleJob("Job test");
+
+        Job anotherJob = new Job();
+        anotherJob.setTitleJob("Job right");
+
+        List<Job> jobs = new ArrayList<>();
+        jobs.add(newJob);
+        jobs.add(anotherJob);
+
+        // Mock the behavior of jobRepository.findByTitleJobStartingWith
+        when(jobRepository.findByTitleJobStartingWith("Job")).thenReturn(jobs);
+
+        List<JobResponseDTO> expectedResponse = new ArrayList<>();
+        expectedResponse.add(JobResponseDTO.from(newJob));
+        expectedResponse.add(JobResponseDTO.from(anotherJob));
+
+        // Call the method under test
+        List<JobResponseDTO> result = jobService.getJobByTitleJob(titleJobPrefix);
+
+        // Assert the result
+        assertEquals(expectedResponse.size(), result.size());
+
+        // Verify interactions
+        verify(jobRepository, times(1)).findByTitleJobStartingWith(titleJobPrefix);
     }
 }

@@ -62,6 +62,10 @@ public class JobService {
         return JobResponseDTO.from(job.get());
     }
 
+    public List<JobResponseDTO> getJobByTitleJob(String titleJob) {
+        return JobResponseDTO.fromAll(jobRepository.findByTitleJobStartingWith(titleJob));
+    }
+
     public JobResponseDTO changeInfoJob(long id, JobRequestDTO jobRequestDTO) {
         Optional<Job> job = jobRepository.findById(id);
         if (job.isEmpty()) {
