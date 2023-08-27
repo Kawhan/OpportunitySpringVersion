@@ -3,6 +3,7 @@ package br.ufpb.dcx.oppfyhub.opportunityhub.controler;
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.JobTitleRequestDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.JobRequestDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.JobResponseDTO;
+import br.ufpb.dcx.oppfyhub.opportunityhub.enums.TypeJob;
 import br.ufpb.dcx.oppfyhub.opportunityhub.service.JobService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +43,16 @@ public class JobController {
         return jobService.getJob(id);
     }
 
-    @GetMapping("{titleJob}")
+    @GetMapping("titleJob")
     @ResponseStatus(code = HttpStatus.OK)
-    public List<JobResponseDTO> getJobByTitleJob(@RequestParam @Valid String titleJob) {
+    public List<JobResponseDTO> getJobByTitleJob(@RequestParam String titleJob) {
         return jobService.getJobByTitleJob(titleJob);
+    }
+
+    @GetMapping("typeJob")
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<JobResponseDTO> getJobsByTypeJob(@RequestParam TypeJob typeJob) {
+        return jobService.getJobsByTypeJob(typeJob);
     }
 
     // Posts

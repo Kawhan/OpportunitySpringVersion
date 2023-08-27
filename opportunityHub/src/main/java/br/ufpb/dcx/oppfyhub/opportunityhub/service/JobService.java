@@ -5,6 +5,7 @@ import br.ufpb.dcx.oppfyhub.opportunityhub.dto.JobRequestDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.JobResponseDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.entity.Job;
 import br.ufpb.dcx.oppfyhub.opportunityhub.entity.Teacher;
+import br.ufpb.dcx.oppfyhub.opportunityhub.enums.TypeJob;
 import br.ufpb.dcx.oppfyhub.opportunityhub.execption.NotFoundJobException;
 import br.ufpb.dcx.oppfyhub.opportunityhub.execption.NotFoundTeacherException;
 import br.ufpb.dcx.oppfyhub.opportunityhub.mappers.JobMapper;
@@ -64,6 +65,10 @@ public class JobService {
 
     public List<JobResponseDTO> getJobByTitleJob(String titleJob) {
         return JobResponseDTO.fromAll(jobRepository.findByTitleJobStartingWith(titleJob));
+    }
+
+    public List<JobResponseDTO> getJobsByTypeJob(TypeJob typeJob) {
+        return JobResponseDTO.fromAll(jobRepository.findByTypeJob(typeJob));
     }
 
     public JobResponseDTO changeInfoJob(long id, JobRequestDTO jobRequestDTO) {
