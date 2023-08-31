@@ -4,10 +4,12 @@ import br.ufpb.dcx.oppfyhub.opportunityhub.dto.LoginUserDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.UserRequestDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.UserResponseDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.entity.User;
+import br.ufpb.dcx.oppfyhub.opportunityhub.enums.RoleUser;
 import br.ufpb.dcx.oppfyhub.opportunityhub.execption.NotAuthorizedException;
 import br.ufpb.dcx.oppfyhub.opportunityhub.execption.NotFoundUserException;
 import br.ufpb.dcx.oppfyhub.opportunityhub.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.PermissionDeniedDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -20,7 +22,7 @@ public class UserService {
     @Autowired
     JWTService jwtService;
 
-    public UserResponseDTO addUser(UserRequestDTO userRequestDTO) {
+    public UserResponseDTO registerUser(UserRequestDTO userRequestDTO) {
         User newUser = new User(
                 userRequestDTO.getEmail(),
                 userRequestDTO.getName(),
@@ -29,6 +31,14 @@ public class UserService {
         );
         User user = userRepository.save(newUser);
         return UserResponseDTO.from(user);
+    }
+
+    private User getUser(String email) {
+        Optional<User> userFound = userRepository.findByEmail(email);
+        if (!userFound.isEmpty()) {
+            return userFound.get();
+        }
+        throw new NotFoundUserException();
     }
 
     public UserResponseDTO getUserByEmail(String email, String authHeader) {
@@ -46,26 +56,20 @@ public class UserService {
         return false;
     }
 
-    public UserResponseDTO getUser(long id) {
-        Optional<User> user = userRepository.findById(id);
-        if (user.isEmpty()) {
-            throw new NotFoundUserException();
-        }
-        return UserResponseDTO.from(user.get());
-    }
-
     private boolean userHasPermission(String authorizationHeader, String email) {
         String subject = jwtService.getTokenSubject(authorizationHeader);
         Optional<User> userFound = userRepository.findByEmail(subject);
         return userFound.isPresent() && userFound.get().getEmail().equals(email);
     }
 
-    public UserResponseDTO deleteUser(long id) {
-        Optional<User> user = userRepository.findById(id);
-        if (user.isEmpty()) {
-            throw new NotFoundUserException();
-        }
-        userRepository.delete(user.get());
-        return UserResponseDTO.from(user.get());
+    public UserResponseDTO removeUser(String email, String authHeader) {
+        User userToBeDeleted = this.getUser(email);
+        User userLogged = this.getUser(jwtService.getTokenSubject(authHeader));
+        if(userLogged.getRoleUser().equals(RoleUser.PROFESSOR) ||
+                userLogged.getEmail().equals(userToBeDeleted.getEmail()))
+            userRepository.delete(userToBeDeleted);
+        else  throw new NotAuthorizedException();
+        return UserResponseDTO.from(userToBeDeleted);
     }
+
 }

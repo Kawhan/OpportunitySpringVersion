@@ -30,6 +30,7 @@ public class UserResponseDTO {
                 .id(user.getId())
                 .name(user.getName())
                 .password(user.getPassword())
+                .email(user.getEmail())
                 .roleUser(user.getRoleUser())
                 .build();
     }

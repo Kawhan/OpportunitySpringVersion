@@ -16,9 +16,9 @@ public class ApplicationConfig {
 
     @Bean
     public FilterRegistrationBean<FilterTokenJWT> filterJwt() {
-        FilterRegistrationBean<FilterTokenJWT> filterRB = new FilterRegistrationBean<FilterTokenJWT>();
+        FilterRegistrationBean<FilterTokenJWT> filterRB = new FilterRegistrationBean<>();
         filterRB.setFilter(new FilterTokenJWT());
-        filterRB.addUrlPatterns("v1/api/jobs*", "/auth/usuarios");
+        filterRB.addUrlPatterns("/v1/api/jobs/*", "/auth/user");
         return filterRB;
     }
 }

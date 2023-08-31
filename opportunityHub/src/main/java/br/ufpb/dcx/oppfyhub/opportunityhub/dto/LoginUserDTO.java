@@ -1,5 +1,7 @@
 package br.ufpb.dcx.oppfyhub.opportunityhub.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +14,13 @@ import java.util.Objects;
 @Getter
 @Setter
 public class LoginUserDTO {
+
+    @JsonProperty("email")
+    @NotNull
     private String email;
+
+    @JsonProperty("password")
+    @NotNull
     private String password;
 
     @Override

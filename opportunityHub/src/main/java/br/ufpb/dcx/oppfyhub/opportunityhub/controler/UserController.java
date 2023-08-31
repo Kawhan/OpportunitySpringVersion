@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/api/teachers")
+@RequestMapping("")
 public class UserController {
     @Autowired
     UserService userService;
@@ -25,13 +25,7 @@ public class UserController {
 
     // Gets
 
-    @GetMapping("{id}")
-
-    public UserResponseDTO getTeacher(@PathVariable long id) {
-        return userService.getUser(id);
-    }
-
-    @GetMapping("/auth/usuarios/{email}")
+    @GetMapping("/auth/user/{email}")
     @ResponseStatus(code=HttpStatus.OK)
     public UserResponseDTO getUser(@PathVariable String email,
                                    @RequestHeader("Authorization") String header) {
@@ -42,19 +36,20 @@ public class UserController {
 
     // Posts
 
-    @PostMapping
+    @PostMapping("v1/api/user")
     @ResponseStatus(code=HttpStatus.CREATED)
-    public UserResponseDTO addUser(@RequestBody @Valid UserRequestDTO userRequestDTO) {
-        return userService.addUser(userRequestDTO);
+    public UserResponseDTO registerUser(@RequestBody @Valid UserRequestDTO userRequestDTO) {
+        return userService.registerUser(userRequestDTO);
     }
 
 
 
     // Deletes
-    @DeleteMapping("{id}/delete")
+    @DeleteMapping("/auth/user/{email}")
     @ResponseStatus(code=HttpStatus.OK)
-    public UserResponseDTO deleteTeacher(@PathVariable long id) {
-        return userService.deleteUser(id);
+    public UserResponseDTO removeUser(@PathVariable String email,
+                                     @RequestHeader("Authorization") String header) {
+        return userService.removeUser(email, header);
     }
 
 }
