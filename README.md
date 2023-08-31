@@ -5,4 +5,8 @@ O sistema giram em torno de uma necessidade vista por mim (Kawhan) em ajudar os 
 
 The system revolves around a need seen by me (Kawhan) in helping professors who provide opportunities for scholarships, jobs, master's degrees, etc., aimed at Campus IV students. So, seeing this opportunity, I created an API to manage vacancy information registration and allow students to enroll in a given vacancy, in addition to providing end-points for direct contact of various information. I also plan to leave the project open source in case any student wants to create something that consumes the api or increasingly improve the initial idea, creating an opportunity to contribute to the open source opportunity and also encouraging students to use the knowledge they have to generate solutions viable for the college where they study.
 
+
+# A branch usando JWT É:
+branchJWT
+
 ## O sistema possui os seguintes endpoints
