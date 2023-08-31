@@ -37,7 +37,7 @@ public class Job {
     String pdfLink;
     LocalDate closingDate;
     @ManyToOne(fetch = FetchType.EAGER)
-    Teacher teacher;
+    User user;
     @Enumerated(EnumType.STRING)
     TypeJob typeJob;
     String nameProject;
@@ -51,7 +51,7 @@ public class Job {
                String titleJob,
                String pdfLink,
                LocalDate closingDate,
-               Teacher teacher,
+               User user,
                TypeJob typeJob,
                String nameProject,
                String linkJob) {
@@ -63,7 +63,7 @@ public class Job {
         this.titleJob = titleJob;
         this.pdfLink = pdfLink;
         this.closingDate = closingDate;
-        this.teacher = teacher;
+        this.user = user;
         this.typeJob = typeJob;
         this.nameProject = nameProject;
         this.linkJob = linkJob;

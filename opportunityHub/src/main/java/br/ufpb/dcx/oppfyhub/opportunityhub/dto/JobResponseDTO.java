@@ -1,7 +1,7 @@
 package br.ufpb.dcx.oppfyhub.opportunityhub.dto;
 
 import br.ufpb.dcx.oppfyhub.opportunityhub.entity.Job;
-import br.ufpb.dcx.oppfyhub.opportunityhub.entity.Teacher;
+import br.ufpb.dcx.oppfyhub.opportunityhub.entity.User;
 import br.ufpb.dcx.oppfyhub.opportunityhub.enums.TypeJob;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -36,7 +36,7 @@ public class JobResponseDTO {
     private String pdfLink;
     private LocalDate closingDate;
     @ManyToOne
-    private Teacher teacher;
+    private User user;
     @Enumerated(EnumType.STRING)
     private TypeJob typeJob;
     private String nameProject;
@@ -55,7 +55,7 @@ public class JobResponseDTO {
                 .titleJob(job.getTitleJob())
                 .pdfLink(job.getPdfLink())
                 .closingDate(job.getClosingDate())
-                .teacher(job.getTeacher())
+                .user(job.getUser())
                 .typeJob(job.getTypeJob())
                 .nameProject(job.getNameProject())
                 .linkJob(job.getLinkJob())

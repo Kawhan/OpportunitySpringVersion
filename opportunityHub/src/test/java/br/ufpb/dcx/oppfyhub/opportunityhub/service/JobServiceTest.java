@@ -3,13 +3,13 @@ package br.ufpb.dcx.oppfyhub.opportunityhub.service;
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.JobRequestDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.JobResponseDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.entity.Job;
-import br.ufpb.dcx.oppfyhub.opportunityhub.entity.Teacher;
+import br.ufpb.dcx.oppfyhub.opportunityhub.entity.User;
 import br.ufpb.dcx.oppfyhub.opportunityhub.enums.TypeJob;
 import br.ufpb.dcx.oppfyhub.opportunityhub.execption.NotFoundJobException;
-import br.ufpb.dcx.oppfyhub.opportunityhub.execption.NotFoundTeacherException;
+import br.ufpb.dcx.oppfyhub.opportunityhub.execption.NotFoundUserException;
 import br.ufpb.dcx.oppfyhub.opportunityhub.mappers.JobMapper;
 import br.ufpb.dcx.oppfyhub.opportunityhub.repository.JobRepository;
-import br.ufpb.dcx.oppfyhub.opportunityhub.repository.TeacherRepository;
+import br.ufpb.dcx.oppfyhub.opportunityhub.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -42,27 +42,27 @@ public class JobServiceTest {
     private JobService jobService;
 
     @Mock
-    private TeacherRepository teacherRepository;
+    private UserRepository userRepository;
 
     @Mock
     private JobMapper jobMapper;
 
     @Test
     public void getAllJobsTest() {
-        Teacher teacher1 = new Teacher();
-        teacher1.setId(1L);
-        teacher1.setName("Professor 1");
+        User user1 = new User();
+        user1.setId(1L);
+        user1.setName("Professor 1");
 
         TypeJob typeJob = TypeJob.PROJETO_DE_EXTENSAO;
         Job newJob = new Job(30, 30, 300.00, LocalDate.now(), "Nenhum", "Vaga phoebus teste 1",
-                "Teste", LocalDate.of(2023, 8, 5), teacher1, typeJob,
+                "Teste", LocalDate.of(2023, 8, 5), user1, typeJob,
                 "Ayty", "Teste");
         newJob.setId(1L);
 
         TypeJob typeJob2 = TypeJob.PROJETO_DE_EXTENSAO;
 
         Job newJob2 = new Job(30, 30, 300.00, LocalDate.now(), "Nenhum", "Vaga phoebus",
-                "Teste", LocalDate.of(2023, 8, 5), teacher1, typeJob2,
+                "Teste", LocalDate.of(2023, 8, 5), user1, typeJob2,
                 "Ayty", "Teste");
         newJob2.setId(2L);
 
@@ -99,14 +99,14 @@ public class JobServiceTest {
     @Test
     public void testCreateJobSuccess() {
         // Mocking Teacher and JobRequestDTO
-        Teacher teacher = new Teacher();
+        User user = new User();
         JobRequestDTO jobRequestDTO = new JobRequestDTO();
         jobRequestDTO.setTeacherID(1L);
         jobRequestDTO.setNumberVacancies(10);
         // Set other properties of jobRequestDTO
 
         // Mocking the behavior of teacherRepository
-        when(teacherRepository.findById(1L)).thenReturn(Optional.of(teacher));
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
         // Mocking the behavior of jobRepository
         Job savedJob = new Job(); // create a mock saved Job object
@@ -120,7 +120,7 @@ public class JobServiceTest {
         // You can add more assertions based on the expected behavior
 
         // Verify interactions
-        verify(teacherRepository, times(1)).findById(1L);
+        verify(userRepository, times(1)).findById(1L);
         verify(jobRepository, times(1)).save(any(Job.class));
     }
 
@@ -133,13 +133,13 @@ public class JobServiceTest {
         // Set other properties of jobRequestDTO
 
         // Mocking the behavior of teacherRepository
-        when(teacherRepository.findById(1L)).thenReturn(Optional.empty());
+        when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
         // Call the method under test and expect an exception
-        assertThrows(NotFoundTeacherException.class, () -> jobService.createJob(jobRequestDTO));
+        assertThrows(NotFoundUserException.class, () -> jobService.createJob(jobRequestDTO));
 
         // Verify interactions
-        verify(teacherRepository, times(1)).findById(1L);
+        verify(userRepository, times(1)).findById(1L);
         verify(jobRepository, never()).save(any(Job.class));
     }
 
@@ -184,21 +184,21 @@ public class JobServiceTest {
         Job existingJob = new Job();
         existingJob.setId(jobId);
 
-        Teacher teacher = new Teacher();
-        teacher.setId(teacherId);
+        User user = new User();
+        user.setId(teacherId);
 
         Job updatedJob = new Job();
         updatedJob.setId(jobId);
-        updatedJob.setTeacher(teacher);
+        updatedJob.setUser(user);
 
         when(jobRepository.findById(jobId)).thenReturn(Optional.of(existingJob));
-        when(teacherRepository.findById(teacherId)).thenReturn(Optional.of(teacher));
+        when(userRepository.findById(teacherId)).thenReturn(Optional.of(user));
         when(jobMapper.updateJobFromDto(jobRequestDTO, existingJob)).thenReturn(updatedJob);
 
         JobResponseDTO result = jobService.changeInfoJob(jobId, jobRequestDTO);
 
         verify(jobRepository, times(1)).findById(jobId);
-        verify(teacherRepository, times(1)).findById(teacherId);
+        verify(userRepository, times(1)).findById(teacherId);
         verify(jobRepository, times(1)).save(updatedJob);
 
         assertNotNull(result);
@@ -226,12 +226,12 @@ public class JobServiceTest {
 
         Job existingJob = new Job();
         when(jobRepository.findById(jobId)).thenReturn(Optional.of(existingJob));
-        when(teacherRepository.findById(teacherId)).thenReturn(Optional.empty());
+        when(userRepository.findById(teacherId)).thenReturn(Optional.empty());
 
-        assertThrows(NotFoundTeacherException.class, () -> jobService.changeInfoJob(jobId, jobRequestDTO));
+        assertThrows(NotFoundUserException.class, () -> jobService.changeInfoJob(jobId, jobRequestDTO));
 
         verify(jobRepository, times(1)).findById(jobId);
-        verify(teacherRepository, times(1)).findById(teacherId);
+        verify(userRepository, times(1)).findById(teacherId);
     }
 
     @Test

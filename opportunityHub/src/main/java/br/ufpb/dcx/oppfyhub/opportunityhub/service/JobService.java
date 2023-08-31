@@ -4,13 +4,13 @@ import br.ufpb.dcx.oppfyhub.opportunityhub.dto.JobTitleRequestDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.JobRequestDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.JobResponseDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.entity.Job;
-import br.ufpb.dcx.oppfyhub.opportunityhub.entity.Teacher;
+import br.ufpb.dcx.oppfyhub.opportunityhub.entity.User;
 import br.ufpb.dcx.oppfyhub.opportunityhub.enums.TypeJob;
 import br.ufpb.dcx.oppfyhub.opportunityhub.execption.NotFoundJobException;
-import br.ufpb.dcx.oppfyhub.opportunityhub.execption.NotFoundTeacherException;
+import br.ufpb.dcx.oppfyhub.opportunityhub.execption.NotFoundUserException;
 import br.ufpb.dcx.oppfyhub.opportunityhub.mappers.JobMapper;
 import br.ufpb.dcx.oppfyhub.opportunityhub.repository.JobRepository;
-import br.ufpb.dcx.oppfyhub.opportunityhub.repository.TeacherRepository;
+import br.ufpb.dcx.oppfyhub.opportunityhub.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ public class JobService {
     JobRepository jobRepository;
 
     @Autowired
-    TeacherRepository teacherRepository;
+    UserRepository userRepository;
 
     @Autowired
     JobMapper jobMapper;
@@ -33,9 +33,9 @@ public class JobService {
     }
 
     public JobResponseDTO createJob(JobRequestDTO jobRequestDTO) {
-        Optional<Teacher> teacher = teacherRepository.findById(jobRequestDTO.getTeacherID());
+        Optional<User> teacher = userRepository.findById(jobRequestDTO.getTeacherID());
         if (teacher.isEmpty()) {
-            throw new NotFoundTeacherException();
+            throw new NotFoundUserException();
         }
         Job newJob = new Job(
                 jobRequestDTO.getNumberVacancies(),
@@ -76,12 +76,12 @@ public class JobService {
         if (job.isEmpty()) {
             throw new NotFoundJobException();
         }
-        Optional<Teacher> teacher = teacherRepository.findById(jobRequestDTO.getTeacherID());
+        Optional<User> teacher = userRepository.findById(jobRequestDTO.getTeacherID());
         if (teacher.isEmpty()) {
-            throw new NotFoundTeacherException();
+            throw new NotFoundUserException();
         }
         Job updateJob = jobMapper.updateJobFromDto(jobRequestDTO, job.get());
-        updateJob.setTeacher(teacher.get());
+        updateJob.setUser(teacher.get());
         jobRepository.save(updateJob);
         return JobResponseDTO.from(job.get());
     }
