@@ -3,9 +3,11 @@ package br.ufpb.dcx.oppfyhub.opportunityhub.dto;
 import br.ufpb.dcx.oppfyhub.opportunityhub.enums.RoleUser;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+@AllArgsConstructor
 @Getter
 @Setter
 public class UserRequestDTO {

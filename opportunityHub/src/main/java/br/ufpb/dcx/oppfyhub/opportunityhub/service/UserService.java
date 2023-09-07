@@ -63,7 +63,7 @@ public class UserService {
         return false;
     }
 
-    private boolean userHasPermission(String authorizationHeader, String email) {
+    protected boolean userHasPermission(String authorizationHeader, String email) {
         String subject = jwtService.getTokenSubject(authorizationHeader);
         Optional<User> userFound = userRepository.findByEmail(subject);
         return (userFound.isPresent() && userFound.get().getEmail().equals(email)) || userFound.get().getRoleUser().equals(RoleUser.PROFESSOR) ;
