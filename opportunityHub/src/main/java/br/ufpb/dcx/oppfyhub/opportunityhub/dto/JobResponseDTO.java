@@ -44,7 +44,7 @@ public class JobResponseDTO {
     private TypeJob typeJob;
     private String nameProject;
     private String linkJob;
-
+    private Integer interests;
 
 
     public static JobResponseDTO from(Job job) {
@@ -65,6 +65,7 @@ public class JobResponseDTO {
                 .typeJob(job.getTypeJob())
                 .nameProject(job.getNameProject())
                 .linkJob(job.getLinkJob())
+                .interests(job.getInterests())
                 .build();
     }
 

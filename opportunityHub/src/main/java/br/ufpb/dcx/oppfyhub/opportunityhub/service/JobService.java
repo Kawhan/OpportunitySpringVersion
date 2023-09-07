@@ -72,10 +72,11 @@ public class JobService {
         if (userLogged.getRoleUser().equals(RoleUser.STUDENT)) {
             if (job.get().userInterested(userLogged)) {
                 job.get().removeUserInterested(userLogged);
+                job.get().removeInterest();
                 return JobResponseInterestedUsersDTO.from(jobRepository.save(job.get()));
             }
-
             job.get().addUserInterested(userLogged);
+            job.get().addInterest();
             return JobResponseInterestedUsersDTO.from(jobRepository.save(job.get()));
         } else throw new NotAuthorizedException();
     }

@@ -47,6 +47,7 @@ public class Job {
     TypeJob typeJob;
     String nameProject;
     String linkJob;
+    Integer interests;
 
     public Job(Integer numberVacancies,
                Integer hoursWeek,
@@ -73,6 +74,7 @@ public class Job {
         this.nameProject = nameProject;
         this.linkJob = linkJob;
         this.interestedUsers = new ArrayList<>();
+        this.interests = 0;
     }
 
     public boolean userInterested(User user) {
@@ -81,6 +83,16 @@ public class Job {
 
     public void addUserInterested(User user) {
         this.interestedUsers.add(user);
+    }
+
+    public void addInterest() {
+        this.interests +=1;
+    }
+
+    public void removeInterest() {
+        if (this.interests > 0) {
+            this.interests -=1;
+        }
     }
 
     public void removeUserInterested(User user) {
