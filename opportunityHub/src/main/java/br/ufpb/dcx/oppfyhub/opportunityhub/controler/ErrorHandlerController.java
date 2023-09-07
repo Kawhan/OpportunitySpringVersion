@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -86,4 +87,16 @@ public class ErrorHandlerController {
         return new ResponseEntity<>(detailsProblemDTO, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(MissingRequestHeaderException.class)
+    ResponseEntity<DetailsProblemDTO> handlerMissingRequestHeaderExceptionException(ServletWebRequest request, MissingRequestHeaderException err) {
+        DetailsProblemDTO detailsProblemDTO = DetailsProblemDTO
+                .builder()
+                .type(request.getRequest().getRequestURL().toString())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .detail(err.getMessage().toString())
+                .title(err.getTitleMessageCode().toString())
+                .build();
+
+        return new ResponseEntity<>(detailsProblemDTO, HttpStatus.BAD_REQUEST);
+    }
 }

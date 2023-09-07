@@ -3,6 +3,7 @@ package br.ufpb.dcx.oppfyhub.opportunityhub.service;
 
 import br.ufpb.dcx.oppfyhub.opportunityhub.execption.InvalidTokenException;
 import br.ufpb.dcx.oppfyhub.opportunityhub.filter.FilterTokenJWT;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.SignatureException;
@@ -35,7 +36,9 @@ public class JWTService {
 
         String subject = null;
         try {
-            subject = Jwts.parser().setSigningKey(TOKEN_KEY).parseClaimsJws(token).getBody().getSubject();
+            JwtParser parser = Jwts.parserBuilder().setSigningKey(TOKEN_KEY).build();
+            // Usando o parseClaimsJws com o JwtParser
+            subject = parser.parseClaimsJws(token).getBody().getSubject();
         } catch (SignatureException e) {
             throw new InvalidTokenException();
         }

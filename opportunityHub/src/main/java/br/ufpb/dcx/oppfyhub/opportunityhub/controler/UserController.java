@@ -36,7 +36,7 @@ public class UserController {
 
     // Posts
 
-    @PostMapping("v1/api/user")
+    @PostMapping("v1/api/users")
     @ResponseStatus(code=HttpStatus.CREATED)
     public UserResponseDTO registerUser(@RequestBody @Valid UserRequestDTO userRequestDTO) {
         return userService.registerUser(userRequestDTO);
@@ -45,7 +45,7 @@ public class UserController {
 
 
     // Deletes
-    @DeleteMapping("/auth/user/{email}")
+    @DeleteMapping("/auth/users/{email}")
     @ResponseStatus(code=HttpStatus.OK)
     public UserResponseDTO removeUser(@PathVariable String email,
                                      @RequestHeader("Authorization") String header) {

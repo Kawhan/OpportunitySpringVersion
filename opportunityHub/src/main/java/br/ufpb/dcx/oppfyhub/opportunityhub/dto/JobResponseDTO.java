@@ -8,6 +8,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,11 +37,15 @@ public class JobResponseDTO {
     private String pdfLink;
     private LocalDate closingDate;
     @ManyToOne
-    private User user;
+    private User userCreator;
+    @ManyToMany()
+    List<User> interestedUsers;
     @Enumerated(EnumType.STRING)
     private TypeJob typeJob;
     private String nameProject;
     private String linkJob;
+
+
 
     public static JobResponseDTO from(Job job) {
         return JobResponseDTO
@@ -55,7 +60,8 @@ public class JobResponseDTO {
                 .titleJob(job.getTitleJob())
                 .pdfLink(job.getPdfLink())
                 .closingDate(job.getClosingDate())
-                .user(job.getUser())
+                .userCreator(job.getUserCreator())
+                .interestedUsers(job.getInterestedUsers())
                 .typeJob(job.getTypeJob())
                 .nameProject(job.getNameProject())
                 .linkJob(job.getLinkJob())

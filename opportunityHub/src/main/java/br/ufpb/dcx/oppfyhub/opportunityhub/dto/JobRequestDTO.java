@@ -45,10 +45,6 @@ public class JobRequestDTO {
     @NotNull(message = "Closing date of project not be a null")
     private LocalDate closingDate;
 
-    @JsonProperty("teacher")
-    @NotNull(message = "Teacher id not be a null")
-    private Long teacherID;
-
     @JsonProperty("type_job")
     @NotNull(message = "Type of job not be a null")
     @Enumerated(EnumType.STRING)
