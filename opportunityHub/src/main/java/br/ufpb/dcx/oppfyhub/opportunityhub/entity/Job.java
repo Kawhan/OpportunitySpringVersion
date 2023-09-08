@@ -1,6 +1,7 @@
 package br.ufpb.dcx.oppfyhub.opportunityhub.entity;
 
 import br.ufpb.dcx.oppfyhub.opportunityhub.enums.TypeJob;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -41,6 +42,7 @@ public class Job {
     LocalDate closingDate;
     @ManyToOne(fetch = FetchType.EAGER)
     User userCreator;
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     List<User> interestedUsers;
     @Enumerated(EnumType.STRING)

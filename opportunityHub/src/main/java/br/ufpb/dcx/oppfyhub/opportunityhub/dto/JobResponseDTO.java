@@ -17,39 +17,33 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Setter
 @Getter
+@Setter
 @Builder
 public class JobResponseDTO {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
     private Integer numberVacancies;
     private Integer hoursWeek;
     private Double scholarshipValue;
-    @CreationTimestamp
     private LocalDate registrationData;
     private LocalDate openingDate;
     private String benefits;
     private String titleJob;
     private String pdfLink;
     private LocalDate closingDate;
-    @ManyToOne
-    private User userCreator;
-    @ManyToMany()
-    List<User> interestedUsers;
-    @Enumerated(EnumType.STRING)
-    private TypeJob typeJob;
-    private String nameProject;
-    private String linkJob;
-    private Integer interests;
+    private UserDTO userCreator; // Usar UserDTO em vez de User
+    private List<UserDTO> interestedUsers; // Usar List<UserDTO> em vez de List<User>
 
+    // Outros campos e métodos
 
     public static JobResponseDTO from(Job job) {
-        return JobResponseDTO
-                .builder()
+        List<UserDTO> interestedUserDTOs = job.getInterestedUsers().stream()
+                .map(UserDTO::from)
+                .collect(Collectors.toList());
+
+        return JobResponseDTO.builder()
                 .id(job.getId())
                 .numberVacancies(job.getNumberVacancies())
                 .hoursWeek(job.getHoursWeek())
@@ -60,12 +54,8 @@ public class JobResponseDTO {
                 .titleJob(job.getTitleJob())
                 .pdfLink(job.getPdfLink())
                 .closingDate(job.getClosingDate())
-                .userCreator(job.getUserCreator())
-                .interestedUsers(job.getInterestedUsers())
-                .typeJob(job.getTypeJob())
-                .nameProject(job.getNameProject())
-                .linkJob(job.getLinkJob())
-                .interests(job.getInterests())
+                .userCreator(UserDTO.from(job.getUserCreator()))
+                .interestedUsers(interestedUserDTOs)
                 .build();
     }
 

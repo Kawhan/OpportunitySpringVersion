@@ -11,23 +11,23 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Setter
 @Getter
+@Setter
 @Builder
 public class JobResponseInterestedUsersDTO {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
-    @ManyToMany()
-    List<User> interestedUsers;
+    private List<UserDTO> interestedUsers;
 
     public static JobResponseInterestedUsersDTO from(Job job) {
-        return JobResponseInterestedUsersDTO
-                .builder()
+        List<UserDTO> userDTOs = job.getInterestedUsers().stream()
+                .map(UserDTO::from)
+                .collect(Collectors.toList());
+
+        return JobResponseInterestedUsersDTO.builder()
                 .id(job.getId())
-                .interestedUsers(job.getInterestedUsers())
+                .interestedUsers(userDTOs)
                 .build();
     }
 }

@@ -39,6 +39,12 @@ public class JobController {
         return jobService.getAllJobs();
     }
 
+    @GetMapping("interest")
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<JobResponseDTO> getAllInterestsFromUser(@RequestHeader("Authorization") String header) {
+        return jobService.getAllInterestsFromUser(header);
+    }
+
     @GetMapping("{id}") // ok
     @ResponseStatus(code=HttpStatus.OK)
     public JobResponseDTO getJob(@PathVariable long id) {

@@ -38,6 +38,12 @@ public class JobService {
         return JobResponseDTO.fromAll(jobRepository.findAll());
     }
 
+    public List<JobResponseDTO> getAllInterestsFromUser(String header) {
+        User userLogged = this.getUser(jwtService.getTokenSubject(header));
+
+        return JobResponseDTO.fromAll(jobRepository.findJobsByUserIdInterested(userLogged.getId()));
+    }
+
     public JobResponseDTO createJob(JobRequestDTO jobRequestDTO, String header) {
         User userLogged = this.getUser(jwtService.getTokenSubject(header));
 
