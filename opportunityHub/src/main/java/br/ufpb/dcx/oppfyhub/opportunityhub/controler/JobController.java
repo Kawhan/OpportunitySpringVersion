@@ -91,8 +91,8 @@ public class JobController {
     }
 
     @Operation(
-            summary = "Get job by title job",
-            description = "Return the job by title job, If there is no discipline that contains the name, you can return an empty list"
+            summary = "Get list of jobs by title job",
+            description = "Return list of jobs by title job, If there is no discipline that contains the name, you can return an empty list"
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "List of jobs",
@@ -106,8 +106,8 @@ public class JobController {
     }
 
     @Operation(
-            summary = "Get job by title type Job",
-            description = "Return the job by type job, If there is no discipline associated to a this type, you can return an empty list"
+            summary = "Get list of jobs by title type Job",
+            description = "Return list of jobs by type job, If there is no discipline associated to a this type, you can return an empty list"
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "List of jobs",
