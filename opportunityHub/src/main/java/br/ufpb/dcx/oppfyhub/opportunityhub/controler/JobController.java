@@ -128,7 +128,7 @@ public class JobController {
             description = "Create a new job, if this job for successful created, return this job"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Job created",
+            @ApiResponse(responseCode = "201", description = "Job created successful",
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Job.class)) }),
             @ApiResponse(responseCode = "401", description = "Unauthorized user",

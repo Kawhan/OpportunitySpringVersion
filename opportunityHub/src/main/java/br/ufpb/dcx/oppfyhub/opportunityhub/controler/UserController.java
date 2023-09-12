@@ -5,6 +5,7 @@ import br.ufpb.dcx.oppfyhub.opportunityhub.dto.UserResponseDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.entity.Job;
 import br.ufpb.dcx.oppfyhub.opportunityhub.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -47,7 +48,7 @@ public class UserController {
     @GetMapping("/auth/user/{email}")
     @ResponseStatus(code=HttpStatus.OK)
     public UserResponseDTO getUser(@PathVariable String email,
-                                   @RequestHeader("Authorization") String header) {
+                                   @Parameter(description = "Bearer token authorization", required = true,hidden = true , schema = @Schema(implementation = String.class)) @RequestHeader("Authorization") String header) {
        return userService.getUserByEmail(email, header);
     }
 
@@ -59,7 +60,7 @@ public class UserController {
             description = "Create user passing json request body, if this user email already exists return 409"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Return user",
+            @ApiResponse(responseCode = "201", description = "Return user created",
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Job.class)) }),
             @ApiResponse(responseCode = "409", description = "Conflict if this user already exists",
@@ -91,7 +92,7 @@ public class UserController {
     @DeleteMapping("/auth/users/{email}")
     @ResponseStatus(code=HttpStatus.OK)
     public UserResponseDTO removeUser(@PathVariable String email,
-                                     @RequestHeader("Authorization") String header) {
+                                      @Parameter(description = "Bearer token authorization", required = true,hidden = true , schema = @Schema(implementation = String.class)) @RequestHeader("Authorization") String header) {
         return userService.removeUser(email, header);
     }
 
