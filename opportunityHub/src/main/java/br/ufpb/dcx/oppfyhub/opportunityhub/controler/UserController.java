@@ -2,7 +2,14 @@ package br.ufpb.dcx.oppfyhub.opportunityhub.controler;
 
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.UserRequestDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.UserResponseDTO;
+import br.ufpb.dcx.oppfyhub.opportunityhub.entity.Job;
 import br.ufpb.dcx.oppfyhub.opportunityhub.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +32,18 @@ public class UserController {
 
     // Gets
 
+    @Operation(
+            summary = "Search user by email",
+            security = @SecurityRequirement(name = "bearerAuth"),
+            description = "Search user by email, passing the header authorization token, if the token not for this user or this user not exists for this email return unauthorized"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Return user",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Job.class)) }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized user",
+                    content = @Content),
+    })
     @GetMapping("/auth/user/{email}")
     @ResponseStatus(code=HttpStatus.OK)
     public UserResponseDTO getUser(@PathVariable String email,
@@ -35,7 +54,17 @@ public class UserController {
 
 
     // Posts
-
+    @Operation(
+            summary = "Create user",
+            description = "Create user passing json request body, if this user email already exists return 409"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Return user",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Job.class)) }),
+            @ApiResponse(responseCode = "409", description = "Conflict if this user already exists",
+                    content = @Content)
+    })
     @PostMapping("v1/api/users")
     @ResponseStatus(code=HttpStatus.CREATED)
     public UserResponseDTO registerUser(@RequestBody @Valid UserRequestDTO userRequestDTO) {
@@ -45,6 +74,20 @@ public class UserController {
 
 
     // Deletes
+    @Operation(
+            summary = "Delete user by email",
+            security = @SecurityRequirement(name = "bearerAuth"),
+            description = "Delete user by email, passing the header authorization token, if the token not for this user or this token user not is Professor return unauthorized and this user not exists for this email 404"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Return user",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Job.class)) }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized user",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "User not found",
+                    content = @Content)
+    })
     @DeleteMapping("/auth/users/{email}")
     @ResponseStatus(code=HttpStatus.OK)
     public UserResponseDTO removeUser(@PathVariable String email,
