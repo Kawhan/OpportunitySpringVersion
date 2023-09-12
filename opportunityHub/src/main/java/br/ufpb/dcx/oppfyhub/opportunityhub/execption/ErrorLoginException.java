@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(code= HttpStatus.UNAUTHORIZED)
 public class ErrorLoginException extends HTTPErrorException{
     public ErrorLoginException(String title, String details) {
-        super(HttpStatus.NOT_FOUND, title, details);
+        super(HttpStatus.UNAUTHORIZED, title, details);
     }
 
 }
