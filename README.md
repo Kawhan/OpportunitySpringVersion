@@ -19,8 +19,8 @@ Link para o vídeo explicativo/demonstrativo sobre o sistema e suas funcionalida
 [Vídeo explicando o projeto](https://google.com)
 
 ## 🔧 Documentação Swagger
-Link para a documentação Swagger do projeto:  
-[Documentação do Swagger](https://google.com)
+Link para a documentação Swagger do projeto (*Documentação no local host, para testar precisa que aplicação esteja de pé*):  
+[Documentação do Swagger](http://localhost:8081/swagger-ui/index.html)
 
 ## ⚙️ Executando testes
 TESTE 01  
