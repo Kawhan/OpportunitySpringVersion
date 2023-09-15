@@ -26,6 +26,38 @@ Link para o vídeo explicativo/demonstrativo sobre o sistema e suas funcionalida
 Link para a documentação Swagger do projeto :  
 [Documentação do Swagger](http://localhost:8081/swagger-ui/index.html)
 
+## 🙎‍♂️🙍‍♀️ Usuarios previamente criados
+
+# Estudantes 
+{
+    "name": "kawhan2",
+    "email": "kawhan2@gmail.com",
+    "password": "123",
+    "roleUser": "STUDENT"
+}
+<hr/>
+{
+    "name": "kawhan",
+    "email": "kawhan@gmail.com",
+    "password": "123",
+    "roleUser": "STUDENT"
+}
+
+# Professores
+{
+    "name": "Raquel",
+    "email": "raquel@gmail.com",
+    "password": "123",
+    "roleUser": "PROFESSOR"
+}
+<hr/>
+{
+    "name": "Rodrigo",
+    "email": "rodrigo@gmail.com",
+    "password": "123",
+    "roleUser": "PROFESSOR"
+}
+
 ## 🛠️ Construído com
 * [Spring Boot](https://spring.io/projects/spring-boot) - Sistema da API
 * [Docker](https://www.docker.com/) - Administração do ambiente
@@ -33,5 +65,5 @@ Link para a documentação Swagger do projeto :
 * [Swagger](https://swagger.io/) - Documentação
 
 ## ✏️ Autores
-|  [<img src="https://avatars.githubusercontent.com/u/69232156?v=4" width=115><br><sub>Kawhan Laurindo de Lima</sub>](https://github.com/Kawhan) | [<img src="https://avatars.githubusercontent.com/u/82915269?v=4" width=115><br><sub>Matheus Felipe B. Oliveira</sub>](https://github.com/matheusfelipe20)
-| :---: | :---: |
+|  [<img src="https://avatars.githubusercontent.com/u/69232156?v=4" width=115><br><sub>Kawhan Laurindo de Lima</sub>](https://github.com/Kawhan) |
+| :---: |
