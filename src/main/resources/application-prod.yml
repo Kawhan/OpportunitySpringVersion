@@ -4,8 +4,6 @@ spring:
     username: ${PROD_DB_USERNAME}
     password: ${PROD_DB_PASSWORD}
     name: opportunityspring
-  server:
-    port: ${PORT:8080}
 
   sql:
     init:
