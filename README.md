@@ -26,9 +26,6 @@ Link para o vídeo explicativo/demonstrativo sobre o sistema e suas funcionalida
 Link para a documentação Swagger do projeto :  
 [Documentação do Swagger](http://localhost:8081/swagger-ui/index.html)
 
-Hello Word
-```
-
 ## 🛠️ Construído com
 * [Spring Boot](https://spring.io/projects/spring-boot) - Sistema da API
 * [Docker](https://www.docker.com/) - Administração do ambiente
