@@ -1,6 +1,8 @@
 package br.ufpb.dcx.oppfyhub.opportunityhub.configs;
 
 import br.ufpb.dcx.oppfyhub.opportunityhub.filter.FilterTokenJWT;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -8,6 +10,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.beans.factory.annotation.Value;
+import javax.sql.DataSource;
 
 @Configuration
 public class ApplicationConfig {
@@ -34,5 +38,15 @@ public class ApplicationConfig {
         FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
         bean.setOrder(0);
         return bean;
+    }
+
+    @Value("${spring.datasource.url}")
+    private String dbUrl;
+
+    @Bean
+    public DataSource dataSource() {
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl(dbUrl);
+        return new HikariDataSource(config);
     }
 }
