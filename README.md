@@ -26,11 +26,6 @@ Link para o vídeo explicativo/demonstrativo sobre o sistema e suas funcionalida
 Link para a documentação Swagger do projeto :  
 [Documentação do Swagger](http://localhost:8081/swagger-ui/index.html)
 
-## ⚙️ Executando testes
-TESTE 01  
-  
-System.out.println('Hello Word')
-```
 Hello Word
 ```
 
