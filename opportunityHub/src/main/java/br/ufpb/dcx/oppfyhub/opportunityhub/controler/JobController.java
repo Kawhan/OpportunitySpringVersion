@@ -43,7 +43,7 @@ public class JobController {
 
     @Operation(
             summary = "Get all Jobs in system",
-            description = "Returns a list of system jobs, if it does not find any discipline it returns an empty list, the endpoint returns all the discipline information"
+            description = "Returns a list of system jobs, if it does not find any job it returns an empty list, the endpoint returns all the job information"
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Return list of jobs",
@@ -67,7 +67,7 @@ public class JobController {
             @ApiResponse(responseCode = "404", description = "User not found",
                     content = @Content),
     })
-    @GetMapping("interest")
+    @GetMapping("interests")
     @ResponseStatus(code = HttpStatus.OK)
     public List<JobResponseDTO> getAllInterestsFromUser(@Parameter(description = "Bearer token authorization", required = true,hidden = true , schema = @Schema(implementation = String.class)) @RequestHeader("Authorization") String header) {
         return jobService.getAllInterestsFromUser(header);
@@ -75,7 +75,7 @@ public class JobController {
 
     @Operation(
             summary = "Get job by id",
-            description = "Return the job by id, if there is no discipline with the specified id, it returns a 404 error"
+            description = "Return the job by id, if there is no job with the specified id, it returns a 404 error"
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found job",
@@ -92,29 +92,29 @@ public class JobController {
 
     @Operation(
             summary = "Get list of jobs by title job",
-            description = "Return list of jobs by title job, If there is no discipline that contains the name, you can return an empty list"
+            description = "Return list of jobs by title job, If there is no job that contains the name, you can return an empty list"
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "List of jobs",
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Job.class)) })
     })
-    @GetMapping("titleJob") // ok
+    @GetMapping("titleJobs") // ok
     @ResponseStatus(code = HttpStatus.OK)
     public List<JobResponseDTO> getJobByTitleJob(@RequestParam String titleJob) {
         return jobService.getJobByTitleJob(titleJob);
     }
 
     @Operation(
-            summary = "Get list of jobs by title type Job",
-            description = "Return list of jobs by type job, If there is no discipline associated to a this type, you can return an empty list"
+            summary = "Get list of jobs by type Job",
+            description = "Return list of jobs by type job, If there is no job associated to a this type, you can return an empty list"
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "List of jobs",
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Job.class)) })
     })
-    @GetMapping("typeJob") // ok
+    @GetMapping("typeJobs") // ok
     @ResponseStatus(code = HttpStatus.OK)
     public List<JobResponseDTO> getJobsByTypeJob(@RequestParam TypeJob typeJob) {
         return jobService.getJobsByTypeJob(typeJob);
@@ -148,15 +148,15 @@ public class JobController {
             description = "Register interest in exists job, if this job not exists return 404, its required the user authorization header. If this user not is Student return not authorized and if this user not exists return 404 user not found"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "List user interest in this disciplines",
+            @ApiResponse(responseCode = "200", description = "List user interest in this jobs",
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Job.class)) }),
             @ApiResponse(responseCode = "401", description = "Unauthorized user",
                     content = @Content),
-            @ApiResponse(responseCode = "404", description = "User not found or discipline not found",
+            @ApiResponse(responseCode = "404", description = "User not found or job not found",
                     content = @Content),
     })
-    @PostMapping("{id}/interest")
+    @PostMapping("{id}/interests")
     @ResponseStatus(code = HttpStatus.OK)
     public JobResponseInterestedUsersDTO realizeInterest(@PathVariable long id,@Parameter(description = "Bearer token authorization", required = true,hidden = true , schema = @Schema(implementation = String.class))  @RequestHeader("Authorization") String header) {
         return jobService.realizeInterest(id, header);
@@ -164,17 +164,17 @@ public class JobController {
 
     // Puts
     @Operation(
-            summary = "Alter discipline info by id",
+            summary = "Alter job info by id",
             security = @SecurityRequirement(name = "bearerAuth"),
-            description = "Change the discipline exists, if this job does not exist it returns 404, the user authorization header is required. If this user is not a teacher or did not create the subject, return unauthorized and if this user does not exist, return 404 user not found"
+            description = "Change the job exists, if this job does not exist it returns 404, the user authorization header is required. If this user is not a teacher or did not create the subject, return unauthorized and if this user does not exist, return 404 user not found"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "changed discipline",
+            @ApiResponse(responseCode = "200", description = "changed job",
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Job.class)) }),
             @ApiResponse(responseCode = "401", description = "Unauthorized user",
                     content = @Content),
-            @ApiResponse(responseCode = "404", description = "User not found or discipline not found",
+            @ApiResponse(responseCode = "404", description = "User not found or job not found",
                     content = @Content),
     })
     @PutMapping("{id}/change") // ok
@@ -185,17 +185,17 @@ public class JobController {
 
     // Patches
     @Operation(
-            summary = "Alter title discipline by id",
+            summary = "Alter title job by id",
             security = @SecurityRequirement(name = "bearerAuth"),
-            description = "Change title if discipline exists, if this job does not exist it returns 404, the user authorization header is required. If this user is not a teacher or did not create the subject, return unauthorized and if this user does not exist, return 404 user not found"
+            description = "Change title if job exists, if this job does not exist it returns 404, the user authorization header is required. If this user is not a teacher or did not create the subject, return unauthorized and if this user does not exist, return 404 user not found"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "changed discipline",
+            @ApiResponse(responseCode = "200", description = "changed job",
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Job.class)) }),
             @ApiResponse(responseCode = "401", description = "Unauthorized user",
                     content = @Content),
-            @ApiResponse(responseCode = "404", description = "User not found or discipline not found",
+            @ApiResponse(responseCode = "404", description = "User not found or job not found",
                     content = @Content),
     })
     @PatchMapping("{id}/title") // ok
@@ -207,17 +207,17 @@ public class JobController {
 
     // Deletes
     @Operation(
-            summary = "Delete discipline by id",
+            summary = "Delete job by id",
             security = @SecurityRequirement(name = "bearerAuth"),
-            description = "Delete discipline if this discipline exists, if this job does not exist it returns 404, the user authorization header is required. If this user is not a teacher or did not create the subject, return unauthorized and if this user does not exist, return 404 user not found"
+            description = "Delete job if this job exists, if this job does not exist it returns 404, the user authorization header is required. If this user is not a teacher or did not create the subject, return unauthorized and if this user does not exist, return 404 user not found"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "changed discipline",
+            @ApiResponse(responseCode = "200", description = "changed job",
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Job.class)) }),
             @ApiResponse(responseCode = "401", description = "Unauthorized user",
                     content = @Content),
-            @ApiResponse(responseCode = "404", description = "User not found or discipline not found",
+            @ApiResponse(responseCode = "404", description = "User not found or job not found",
                     content = @Content),
     })
     @DeleteMapping("{id}/delete") // ok

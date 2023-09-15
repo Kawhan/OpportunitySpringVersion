@@ -30,26 +30,26 @@ public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    Integer numberVacancies;
-    Integer hoursWeek;
-    Double scholarshipValue;
+    private Integer numberVacancies;
+    private Integer hoursWeek;
+    private Double scholarshipValue;
     @CreationTimestamp
-    LocalDate registrationData;
-    LocalDate openingDate;
-    String benefits;
-    String titleJob;
-    String pdfLink;
-    LocalDate closingDate;
+    private LocalDate registrationData;
+    private LocalDate openingDate;
+    private String benefits;
+    private String titleJob;
+    private String pdfLink;
+    private LocalDate closingDate;
     @ManyToOne(fetch = FetchType.EAGER)
-    User userCreator;
+    private User userCreator;
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
-    List<User> interestedUsers;
+    private List<User> interestedUsers;
     @Enumerated(EnumType.STRING)
-    TypeJob typeJob;
-    String nameProject;
-    String linkJob;
-    Integer interests;
+    private TypeJob typeJob;
+    private String nameProject;
+    private String linkJob;
+    private Integer interests;
 
     public Job(Integer numberVacancies,
                Integer hoursWeek,

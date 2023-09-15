@@ -33,8 +33,12 @@ public class JobResponseDTO {
     private String titleJob;
     private String pdfLink;
     private LocalDate closingDate;
+    private TypeJob typeJob;
     private UserDTO userCreator; // Usar UserDTO em vez de User
     private List<UserDTO> interestedUsers; // Usar List<UserDTO> em vez de List<User>
+    private String nameProject;
+    private String linkJob;
+    private Integer interests;
 
     // Outros campos e métodos
 
@@ -56,6 +60,10 @@ public class JobResponseDTO {
                 .closingDate(job.getClosingDate())
                 .userCreator(UserDTO.from(job.getUserCreator()))
                 .interestedUsers(interestedUserDTOs)
+                .typeJob(job.getTypeJob())
+                .nameProject(job.getNameProject())
+                .linkJob(job.getLinkJob())
+                .interests(job.getInterests())
                 .build();
     }
 

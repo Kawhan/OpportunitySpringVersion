@@ -36,7 +36,7 @@ public class FilterTokenJWT extends GenericFilterBean {
         if (!method.equals("GET")) {
             if (header == null || !header.startsWith("Bearer ")) {
                 ((HttpServletResponse) response).sendError(HttpServletResponse.SC_UNAUTHORIZED,
-                        "Token inexistente ou mal formatado!");
+                        "Nonexistent or poorly formatted token!");
                 return;
                 // throw new ServletException("Token inexistente ou mal formatado!");
             }

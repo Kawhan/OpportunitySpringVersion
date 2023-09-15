@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 public class NotFoundUserException extends NotFoundException{
     public NotFoundUserException() {
-        super("Teacher not found", "Teacher not registered in the system");
+        super("User not found", "User not registered in the system");
     }
 }
