@@ -3,6 +3,7 @@ package br.ufpb.dcx.oppfyhub.opportunityhub.controler;
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.UserRequestDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.UserResponseDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.entity.Job;
+import br.ufpb.dcx.oppfyhub.opportunityhub.entity.User;
 import br.ufpb.dcx.oppfyhub.opportunityhub.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -41,7 +42,7 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Return user",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Job.class)) }),
+                            schema = @Schema(implementation = User.class)) }),
             @ApiResponse(responseCode = "401", description = "Unauthorized user",
                     content = @Content),
     })
@@ -62,7 +63,7 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Return user created",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Job.class)) }),
+                            schema = @Schema(implementation = User.class)) }),
             @ApiResponse(responseCode = "409", description = "Conflict if this user already exists",
                     content = @Content)
     })
@@ -83,7 +84,7 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Return user",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Job.class)) }),
+                            schema = @Schema(implementation = User.class)) }),
             @ApiResponse(responseCode = "401", description = "Unauthorized user",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "User not found",
