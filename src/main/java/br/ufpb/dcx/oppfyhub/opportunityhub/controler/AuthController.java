@@ -30,7 +30,7 @@ public class AuthController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User token",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Job.class)) }),
+                            schema = @Schema(example = "token: token")) }),
             @ApiResponse(responseCode = "401", description = "Unauthorized user",
                     content = @Content),
     })
