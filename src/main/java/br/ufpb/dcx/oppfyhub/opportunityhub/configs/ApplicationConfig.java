@@ -39,14 +39,4 @@ public class ApplicationConfig {
         bean.setOrder(0);
         return bean;
     }
-
-    @Value("${spring.datasource.url}")
-    private String dbUrl;
-
-    @Bean
-    public DataSource dataSource() {
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(dbUrl);
-        return new HikariDataSource(config);
-    }
 }
