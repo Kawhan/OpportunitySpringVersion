@@ -26,6 +26,9 @@ Link para o vídeo explicativo/demonstrativo sobre o sistema e suas funcionalida
 Link para a documentação Swagger do projeto :  
 [Documentação do Swagger](http://localhost:8081/swagger-ui/index.html)
 
+Caso deseje usar a documentação do heroku:
+[Documentação do Swagger heroku]([http://localhost:8081/swagger-ui/index.html](https://opportunityspring-cbf00a65dc1b.herokuapp.com/swagger-ui/index.html#))
+
 ## 🙎‍♂️🙍‍♀️ Usuarios previamente criados
 
 # Estudantes 
