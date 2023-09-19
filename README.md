@@ -70,6 +70,7 @@ https://opportunityspring-cbf00a65dc1b.herokuapp.com/swagger-ui/index.html#
 * [Docker](https://www.docker.com/) - Administração do ambiente
 * [JWT](https://jwt.io/) - Autenticação de usuário
 * [Swagger](https://swagger.io/) - Documentação
+* [Heroku](https://www.heroku.com/) - Heroku
 
 ## ✏️ Autores
 |  [<img src="https://avatars.githubusercontent.com/u/69232156?v=4" width=115><br><sub>Kawhan Laurindo de Lima</sub>](https://github.com/Kawhan) |
