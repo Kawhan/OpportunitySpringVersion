@@ -1,16 +1,13 @@
-package br.ufpb.dcx.oppfyhub.opportunityhub.controler;
+package br.ufpb.dcx.oppfyhub.opportunityhub.controller;
 
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.LoginUserDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.ResponseLoginDTO;
-import br.ufpb.dcx.oppfyhub.opportunityhub.entity.Job;
 import br.ufpb.dcx.oppfyhub.opportunityhub.service.AuthenticationIntermediary;
-import br.ufpb.dcx.oppfyhub.opportunityhub.service.JWTService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
