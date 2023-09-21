@@ -1,4 +1,4 @@
-package br.ufpb.dcx.oppfyhub.opportunityhub.controler;
+package br.ufpb.dcx.oppfyhub.opportunityhub.controller;
 
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.UserRequestDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.UserResponseDTO;
@@ -45,7 +45,7 @@ public class UserController {
             @ApiResponse(responseCode = "401", description = "Unauthorized user",
                     content = @Content),
     })
-    @GetMapping("/auth/user/{email}")
+    @GetMapping("/auth/users/{email}")
     @ResponseStatus(code=HttpStatus.OK)
     public UserResponseDTO getUser(@PathVariable String email,
                                    @Parameter(description = "Bearer token authorization", required = true,hidden = true , schema = @Schema(implementation = String.class)) @RequestHeader("Authorization") String header) {

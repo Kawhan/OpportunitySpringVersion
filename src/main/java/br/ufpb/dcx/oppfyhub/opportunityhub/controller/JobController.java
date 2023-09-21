@@ -1,4 +1,4 @@
-package br.ufpb.dcx.oppfyhub.opportunityhub.controler;
+package br.ufpb.dcx.oppfyhub.opportunityhub.controller;
 
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.JobResponseInterestedUsersDTO;
 import br.ufpb.dcx.oppfyhub.opportunityhub.dto.JobTitleRequestDTO;
