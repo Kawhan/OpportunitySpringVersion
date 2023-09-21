@@ -20,7 +20,7 @@ The System has already been implemented at UFPB and is working (https://opportun
 
 ## 🎥 Vídeo do projeto (Ainda em andamento)
 Link para o vídeo explicativo/demonstrativo sobre o sistema e suas funcionalidades:  
-[Vídeo explicando o projeto](https://google.com)
+[Vídeo explicando o projeto](https://drive.google.com/file/d/1R5gTxyCzLo8W8YbtUMinckKLmsdsunHL/view?usp=sharing)
 
 ## 🔧 Documentação Swagger (Documentação no local host, para testar precisa que aplicação esteja de pé)
 Link para a documentação Swagger do projeto :  
